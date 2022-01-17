@@ -6,8 +6,9 @@
         "author": "RipDevil <tiberi64@yandex.ru>",
         "license": "MIT",
         "scripts": {
-                "start": "nodemon potato/go-squares.js --v --d",
-                "fix": "prettier ./potato/**/*.js --single-quote --write"
+                "start": "nodemon potato/go-squares.js --d",
+                "start:verbose": "nodemon potato/go-squares.js --d --v",
+                "fix": "prettier --single-quote --write ."
         },
         "devDependencies": {
                 "nodemon": "^2.0.15",
