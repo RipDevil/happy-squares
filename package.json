@@ -8,7 +8,7 @@
         "license": "MIT",
         "scripts": {
                 "start": "nodemon potato/go_squares.js",
-                "fix": "prettier ./potato/**/*.js --single-quote --arrow-parens=avoid --write"
+                "fix": "prettier ./potato/**/*.js --single-quote --write"
         },
         "devDependencies": {
                 "nodemon": "^2.0.15",
