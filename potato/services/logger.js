@@ -18,7 +18,7 @@ class LoggerVerbose extends Logger {
         }
 
         write(text) {
-                this.isVerbose && this.writeLog(text);
+                this.isVerbose && super.write(text);
         }
 }
 
