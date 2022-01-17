@@ -1,9 +1,19 @@
-import opts from './opts.js';
-import { writeConsoleLog } from '../utils/write-console-log.js';
+import opts from "./opts.js";
+import { writeConsoleLog } from "../utils/write-console-log.js";
 
 class Logger {
-        constructor(writeLog, isVerbose) {
+        constructor(writeLog) {
                 this.writeLog = writeLog;
+        }
+
+        write(text) {
+                this.writeLog(text);
+        }
+}
+
+class LoggerVerbose extends Logger {
+        constructor(writeLog, isVerbose) {
+                super(writeLog);
                 this.isVerbose = isVerbose;
         }
 
@@ -12,4 +22,4 @@ class Logger {
         }
 }
 
-export default (() => new Logger(writeConsoleLog, opts.verbose))();
+export default (() => new LoggerVerbose(writeConsoleLog, opts.verbose))();
