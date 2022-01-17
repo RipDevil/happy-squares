@@ -9,6 +9,9 @@ this is a simple project to show git progress (i.e. <insert your color> squares)
 - node 14.17.0 because I am too lazy
 
 ### usage:
-```in progress```
+
+`in progress`
+
 ### develop:
-```in progress```
+
+`in progress`
