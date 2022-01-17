@@ -1,4 +1,4 @@
 export const ARGVS = {
-        ["--v"]: "verbose",
-        ["--d"]: "dev",
+        ['--v']: 'verbose',
+        ['--d']: 'dev',
 };

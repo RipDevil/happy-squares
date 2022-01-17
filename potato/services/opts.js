@@ -1,4 +1,4 @@
-import { ARGVS } from "../consts/argv-map.js";
+import { ARGVS } from '../consts/argv-map.js';
 
 export default (function getOpts() {
         let opts = process.argv.reduce(
@@ -9,6 +9,6 @@ export default (function getOpts() {
                 {}
         );
 
-        console.log("opts :>> ", opts);
+        console.log('opts :>> ', opts);
         return opts;
 })();

@@ -1,5 +1,5 @@
-import opts from "./opts.js";
-import { writeConsoleLog } from "../utils/write-console-log.js";
+import opts from './opts.js';
+import { writeConsoleLog } from '../utils/write-console-log.js';
 
 class Logger {
         constructor(writeLog, isVerbose) {
