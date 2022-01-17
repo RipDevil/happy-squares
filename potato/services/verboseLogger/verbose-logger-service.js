@@ -1,4 +1,4 @@
-import { Logger } from "../logger/logger-service.js";
+import { Logger } from '../logger/logger-service.js';
 
 export class LoggerVerbose extends Logger {
         constructor(writeLog, isVerbose) {

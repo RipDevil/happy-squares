@@ -9,6 +9,5 @@ export default (function getOpts() {
                 {}
         );
 
-        console.log('opts :>> ', opts);
         return opts;
 })();
