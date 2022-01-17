@@ -1,0 +1,8 @@
+{
+  "name": "happy-squares",
+  "version": "0.0.1",
+  "main": "potato/cli.js",
+  "repository": "git@github.com:RipDevil/happy-squares.git",
+  "author": "RipDevil <tiberi64@yandex.ru>",
+  "license": "MIT"
+}
