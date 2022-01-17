@@ -7,6 +7,6 @@ export class LoggerVerbose extends Logger {
         }
 
         write(text) {
-                this.isVerbose && super.write(text);
+                this.isVerbose && super.write('[verbose] :>> '+text);
         }
 }
