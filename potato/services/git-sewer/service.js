@@ -13,7 +13,7 @@ export class GitSewer {
     }
 
     async _getGlobalUserName() {
-        return await this.exec('git config --global user.name');
+        return (await this.exec('git config --global user.name')).trim();
     }
 
     async _getAllCommits() {
