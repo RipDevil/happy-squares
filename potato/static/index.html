@@ -55,7 +55,7 @@
     <script type="module" defer>
         document.querySelectorAll('.squares > *').forEach((s) => {
             if (s.dataset?.count > 0) {
-                s.style.backgroundColor = `hsl([[COLOR]], 100%, ${100 - (s.dataset.count * 5 % 100)
+                s.style.backgroundColor = `hsl([[COLOR]], 100%, ${100 - ((s.dataset.count * 5))
                     }%)`;
             }
 
