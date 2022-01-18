@@ -6,6 +6,8 @@ import { pipeline } from 'stream';
 import { join as pathJoin } from 'path';
 import { createReadStream, createWriteStream } from 'fs';
 
+import { open } from './utils/open.js';
+
 const root = process.cwd();
 
 export default async function main() {
@@ -20,18 +22,20 @@ export default async function main() {
         try {
                 await mkdir(pathToDistDir);
         } catch (err) {
-                logger.write(`Error: ${err?.message || ''}`);
+                if (err.code !== 'EEXIST') { // because it's a common case
+                        logger.write(`Error: ${err?.message || ''}`);
+                }
         }
 
         pipeline(
                 createReadStream(pathToSrcHtml),
                 createWriteStream(pathToDistHtml),
                 () => {
-                        logger.write(
-                                'Error: an error has occuered during pipeline'
-                        );
+                        open(pathToDistHtml);
                 }
-        );
+        ).on('error', (err) => {
+                logger.write(`Error: ${err?.message || ''}`);
+        });
 }
 
 if (opts.dev) {
