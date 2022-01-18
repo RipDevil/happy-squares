@@ -7,11 +7,12 @@ import { createReadStream, createWriteStream } from 'fs';
 
 import { open } from './utils/open.js';
 import { promisedPipeline as pipeline } from './utils/promised-pipeline.js';
+import gitGetter from './services/git-sewer/index.js';
 
 const root = process.cwd();
 
 export default async function main() {
-    logger.write('The app has been started');
+    logger.write('\r\n\r\n==== The app has been started ====');
     logger.write('From ' + root);
     logger.write(JSON.stringify(opts, null, 3));
 
@@ -19,12 +20,22 @@ export default async function main() {
     const pathToSrcHtml = pathJoin(root, 'potato/static', 'index.html');
     const pathToDistDir = pathJoin(root, 'dist');
 
+    await gitGetter.init();
+
     try {
         logger.write(`Making dir "${pathToDistDir}"`);
         await mkdir(pathToDistDir);
         logger.write(`Make dir success "${pathToDistDir}"`);
     } catch (err) {}
 
+    const commitsDateCounts = gitGetter.getSq();
+    logger.write(
+        `Successfully collected commits and dates ${JSON.stringify(
+            commitsDateCounts,
+            null,
+            3
+        )}`
+    );
     // collect git data
     // create temp html
     // fill temp html
