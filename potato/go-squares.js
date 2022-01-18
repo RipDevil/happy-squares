@@ -2,11 +2,11 @@ import logger from './services/verboseLogger/index.js';
 import opts from './services/opts/index.js';
 
 import { mkdir } from 'fs/promises';
-import { pipeline } from 'stream';
 import { join as pathJoin } from 'path';
 import { createReadStream, createWriteStream } from 'fs';
 
 import { open } from './utils/open.js';
+import { promisedPipeline as pipeline } from './utils/promised-pipeline.js';
 
 const root = process.cwd();
 
@@ -22,20 +22,19 @@ export default async function main() {
         try {
                 await mkdir(pathToDistDir);
         } catch (err) {
-                if (err.code !== 'EEXIST') { // because it's a common case
+                if (err.code !== 'EEXIST') {
+                        // because it's a common case
                         logger.write(`Error: ${err?.message || ''}`);
                 }
         }
 
-        pipeline(
-                createReadStream(pathToSrcHtml),
-                createWriteStream(pathToDistHtml),
-                () => {
-                        open(pathToDistHtml);
-                }
-        ).on('error', (err) => {
-                logger.write(`Error: ${err?.message || ''}`);
-        });
+        try {
+                await pipeline(
+                        createReadStream(pathToSrcHtml),
+                        createWriteStream(pathToDistHtml)
+                );
+                open(pathToDistHtml);
+        } catch (err) {}
 }
 
 if (opts.dev) {
