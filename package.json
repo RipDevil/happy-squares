@@ -6,7 +6,7 @@
   "author": "RipDevil <tiberi64@yandex.ru>",
   "license": "MIT",
   "bin": {
-    "happysquares": "potato/cli.js"
+    "hsq": "potato/cli.js"
   },
   "scripts": {
     "start": "nodemon potato/go-squares.js --d",
