@@ -20,6 +20,7 @@ export default async function main() {
         const pathToDistDir = pathJoin(root, 'dist');
 
         try {
+                logger.write(`Making dir "${pathToDistDir}"`);
                 await mkdir(pathToDistDir);
                 logger.write(`Make dir success "${pathToDistDir}"`);
         } catch (err) {}
@@ -31,6 +32,9 @@ export default async function main() {
         // open it!
 
         try {
+                logger.write(
+                        `Processing file "${pathToSrcHtml}" -> "${pathToDistHtml}"`
+                );
                 await pipeline(
                         createReadStream(pathToSrcHtml),
                         createWriteStream(pathToDistHtml)
