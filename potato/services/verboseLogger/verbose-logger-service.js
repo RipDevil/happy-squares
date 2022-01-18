@@ -1,12 +1,12 @@
 import { Logger } from '../logger/logger-service.js';
 
 export class LoggerVerbose extends Logger {
-        constructor(writeLog, isVerbose) {
-                super(writeLog);
-                this.isVerbose = isVerbose;
-        }
+    constructor(writeLog, isVerbose) {
+        super(writeLog);
+        this.isVerbose = isVerbose;
+    }
 
-        write(text) {
-                this.isVerbose && super.write('[verbose] :>> ' + text);
-        }
+    write(text) {
+        this.isVerbose && super.write('[verbose] :>> ' + text);
+    }
 }

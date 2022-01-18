@@ -1,9 +1,9 @@
 export class Logger {
-        constructor(writeLog) {
-                this.writeLog = writeLog;
-        }
+    constructor(writeLog) {
+        this.writeLog = writeLog;
+    }
 
-        write(text) {
-                this.writeLog(text);
-        }
+    write(text) {
+        this.writeLog(text);
+    }
 }
