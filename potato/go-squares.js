@@ -38,7 +38,10 @@ export default async function main() {
     );
 
     try {
-        const indexPage = await readFile('./static/index.html', import.meta.url);
+        const indexPage = await readFile(
+            './static/index.html',
+            import.meta.url
+        );
 
         const { header, footer } =
             /(?<header>[\s\S]+)\[\[SQUARES\]\](?<footer>[\s\S]+)/m.exec(
