@@ -1,3 +1,5 @@
+import { populateCalendar } from '../../utils/populate-calendar.js';
+
 export class GitSewer {
     constructor(gitDateGetter, isLocal) {
         this.exec = gitDateGetter;
@@ -14,7 +16,11 @@ export class GitSewer {
     }
 
     async _getGlobalUserName() {
-        return (await this.exec(`git config --${this.isLocal ? 'local' : 'global'} user.name`)).trim();
+        return (
+            await this.exec(
+                `git config --${this.isLocal ? 'local' : 'global'} user.name`
+            )
+        ).trim();
     }
 
     async _getAllCommits() {
@@ -28,11 +34,7 @@ export class GitSewer {
 
         commitsDates.pop(); // delete last empty date
 
-        var currDate = new Date();
-        var tmp = new Date(currDate.getTime());
-        var lowerFirstHalf = new Date(tmp.setMonth(currDate.getMonth() - 12));
-
-        const calendar = getDates(lowerFirstHalf, currDate.getTime());
+        const calendar = populateCalendar();
 
         commitsDates.forEach((cd) => {
             calendar[cd] += 1;
@@ -40,19 +42,4 @@ export class GitSewer {
 
         return calendar;
     }
-}
-
-function getDates(startDate, endDate) {
-    const dates = {};
-    let currentDate = startDate;
-    const addDays = function (days) {
-        const date = new Date(this.valueOf());
-        date.setDate(date.getDate() + days);
-        return date;
-    };
-    while (currentDate <= endDate) {
-        dates[currentDate.toDateString()] = 0;
-        currentDate = addDays.call(currentDate, 1);
-    }
-    return dates;
 }
