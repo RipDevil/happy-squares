@@ -24,12 +24,20 @@ export default async function main() {
                 logger.write(`Make dir success "${pathToDistDir}"`);
         } catch (err) {}
 
+        // collect git data
+        // create temp html
+        // fill temp html
+        // clone temp html to dist
+        // open it!
+
         try {
                 await pipeline(
                         createReadStream(pathToSrcHtml),
                         createWriteStream(pathToDistHtml)
                 );
-                logger.write(`Process file success "${pathToSrcHtml}" -> "${pathToDistHtml}"`);
+                logger.write(
+                        `Process file success "${pathToSrcHtml}" -> "${pathToDistHtml}"`
+                );
                 open(pathToDistHtml);
         } catch (err) {}
 }
