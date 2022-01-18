@@ -10,7 +10,9 @@ this is a simple project to show git progress (i.e. <insert your color> squares)
 
 ### usage:
 
-`in progress`
+The project is in deep alpha so
+- clone
+- yarn start
 
 ### develop:
 
