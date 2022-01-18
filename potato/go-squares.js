@@ -1,9 +1,9 @@
 import logger from './services/verboseLogger/index.js';
 import opts from './services/opts/index.js';
 
-import { mkdir } from 'fs/promises';
+import { mkdir, readFile } from 'fs/promises';
 import { join as pathJoin } from 'path';
-import { createReadStream, createWriteStream } from 'fs';
+import { createWriteStream } from 'fs';
 
 import { open } from './utils/open.js';
 import { promisedPipeline as pipeline } from './utils/promised-pipeline.js';
@@ -17,7 +17,6 @@ export default async function main() {
     logger.write('argv: ' + JSON.stringify(opts, null, 3));
 
     const pathToDistHtml = pathJoin(root, 'dist', 'happy-squares.html');
-    const pathToSrcHtml = pathJoin(root, 'potato/static', 'index.html');
     const pathToDistDir = pathJoin(root, 'dist');
 
     await gitGetter.init();
@@ -37,24 +36,40 @@ export default async function main() {
         )}`
     );
 
-    // create temp html
-    // fill temp html
-    // clone temp html to dist
-    // open it!
-
     try {
-        logger.write(
-            `Processing file "${pathToSrcHtml}" -> "${pathToDistHtml}"`
+        const indexPage = await readFile(
+            new URL('./static/index.html', import.meta.url),
+            {
+                encoding: 'utf-8',
+            }
         );
+
+        const { header, footer } =
+            /(?<header>[\s\S]+)\[\[SQUARES\]\](?<footer>[\s\S]+)/m.exec(
+                indexPage
+            ).groups;
+
+        const ws = createWriteStream(pathToDistHtml);
+        ws.write(header);
+
         await pipeline(
-            createReadStream(pathToSrcHtml),
-            createWriteStream(pathToDistHtml)
+            function* () {
+                for (const commit in commitsDateCounts) {
+                    console.log('commit :>> ', commit);
+                    yield '<div></div>\r\n';
+                }
+            },
+            async function* (stream) {
+                for await (const chunk of stream) yield chunk;
+                yield footer;
+            },
+            ws
         );
-        logger.write(
-            `Process file success "${pathToSrcHtml}" -> "${pathToDistHtml}"`
-        );
+
         open(pathToDistHtml);
-    } catch (err) {}
+    } catch (err) {
+        console.log('err :>> ', err);
+    }
 }
 
 if (opts.dev) {
