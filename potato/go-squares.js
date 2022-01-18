@@ -14,7 +14,7 @@ const root = process.cwd();
 export default async function main() {
     logger.write('\r\n\r\n==== The app has been started ====');
     logger.write('From ' + root);
-    logger.write(JSON.stringify(opts, null, 3));
+    logger.write('argv: '+JSON.stringify(opts, null, 3));
 
     const pathToDistHtml = pathJoin(root, 'dist', 'happy-squares.html');
     const pathToSrcHtml = pathJoin(root, 'potato/static', 'index.html');
@@ -30,13 +30,13 @@ export default async function main() {
 
     const commitsDateCounts = gitGetter.getSq();
     logger.write(
-        `Successfully collected commits and dates ${JSON.stringify(
+        `Successfully collected commits and dates: ${JSON.stringify(
             commitsDateCounts,
             null,
             3
         )}`
     );
-    // collect git data
+
     // create temp html
     // fill temp html
     // clone temp html to dist
