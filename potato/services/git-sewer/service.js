@@ -1,6 +1,7 @@
 export class GitSewer {
-    constructor(gitDateGetter) {
+    constructor(gitDateGetter, isLocal) {
         this.exec = gitDateGetter;
+        this.isLocal = isLocal;
     }
 
     async init() {
@@ -13,7 +14,7 @@ export class GitSewer {
     }
 
     async _getGlobalUserName() {
-        return (await this.exec('git config --local user.name')).trim();
+        return (await this.exec(`git config --${this.isLocal ? 'local' : 'global'} user.name`)).trim();
     }
 
     async _getAllCommits() {
