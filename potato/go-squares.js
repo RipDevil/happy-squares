@@ -21,18 +21,15 @@ export default async function main() {
 
         try {
                 await mkdir(pathToDistDir);
-        } catch (err) {
-                if (err.code !== 'EEXIST') {
-                        // because it's a common case
-                        logger.write(`Error: ${err?.message || ''}`);
-                }
-        }
+                logger.write(`Make dir success "${pathToDistDir}"`);
+        } catch (err) {}
 
         try {
                 await pipeline(
                         createReadStream(pathToSrcHtml),
                         createWriteStream(pathToDistHtml)
                 );
+                logger.write(`Process file success "${pathToSrcHtml}" -> "${pathToDistHtml}"`);
                 open(pathToDistHtml);
         } catch (err) {}
 }
