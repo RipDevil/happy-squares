@@ -1,30 +1,37 @@
-import logger from './services/verboseLogger/index.js';
-import opts from './services/opts/index.js';
+import logger from "./services/verboseLogger/index.js";
+import opts from "./services/opts/index.js";
 
-import fs from 'fs';
-import path from 'path';
+import { mkdir } from "fs/promises";
+import { pipeline } from "stream";
+import { join as pathJoin } from "path";
+import { createReadStream, createWriteStream } from "fs";
 
-export default function main() {
-        logger.write('The app has been started');
-        logger.write('From ' + process.cwd());
+const root = process.cwd();
+
+export default async function main() {
+        logger.write("The app has been started");
+        logger.write("From " + root);
         logger.write(JSON.stringify(opts, null, 3));
 
-        const readStaticHtmlStream = fs.createReadStream(
-                path.join('./potato/static/index.html')
+        const pathToDistHtml = pathJoin(root, "dist", "happy-squares.html");
+        const pathToSrcHtml = pathJoin(root, "potato/static", "index.html");
+        const pathToDistDir = pathJoin(root, "dist");
+
+        try {
+                await mkdir(pathToDistDir);
+        } catch (err) {
+                logger.write(`Error: ${err?.message || ""}`);
+        }
+
+        pipeline(
+                createReadStream(pathToSrcHtml),
+                createWriteStream(pathToDistHtml),
+                () => {
+                        logger.write(
+                                "Error: an error has occuered during pipeline"
+                        );
+                }
         );
-        const writeResultHtmlStream = fs.createWriteStream(
-                path.join('happy-square.html')
-        );
-
-        readStaticHtmlStream.pipe(writeResultHtmlStream);
-
-        writeResultHtmlStream.on('error', (err) => {
-                logger.write('Write ' + err.message);
-        });
-
-        readStaticHtmlStream.on('error', (err) => {
-                logger.write('Read ' + err.message);
-        });
 }
 
 if (opts.dev) {
