@@ -1,17 +1,17 @@
 {
-        "name": "happy-squares",
-        "version": "0.0.1",
-        "type": "module",
-        "repository": "git@github.com:RipDevil/happy-squares.git",
-        "author": "RipDevil <tiberi64@yandex.ru>",
-        "license": "MIT",
-        "scripts": {
-                "start": "nodemon potato/go-squares.js --d",
-                "start:verbose": "nodemon potato/go-squares.js --d --v",
-                "fix": "prettier --write ./potato"
-        },
-        "devDependencies": {
-                "nodemon": "^2.0.15",
-                "prettier": "^2.5.1"
-        }
+  "name": "happy-squares",
+  "version": "0.0.1",
+  "type": "module",
+  "repository": "git@github.com:RipDevil/happy-squares.git",
+  "author": "RipDevil <tiberi64@yandex.ru>",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon potato/go-squares.js --d",
+    "start:verbose": "nodemon potato/go-squares.js --d --v",
+    "fix": "prettier --write ./potato"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15",
+    "prettier": "^2.5.1"
+  }
 }
