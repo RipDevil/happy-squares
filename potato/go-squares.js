@@ -50,18 +50,20 @@ export default async function main() {
             ).groups;
 
         const ws = createWriteStream(pathToDistHtml);
-        ws.write(header);
+        ws.write(header.replace(/\[\[USER\]\]/g, gitGetter.globalName));
 
         await pipeline(
             function* () {
                 for (const commit in commitsDateCounts) {
                     console.log('commit :>> ', commit);
-                    yield '<div></div>\r\n';
+                    yield `
+                        <div data-date="${commit}" data-count="${commitsDateCounts[commit]}"></div>
+                    `;
                 }
             },
             async function* (stream) {
                 for await (const chunk of stream) yield chunk;
-                yield footer;
+                yield footer.replace(/\[\[COLOR\]\]/g, 9);
             },
             ws
         );
