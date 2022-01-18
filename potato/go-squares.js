@@ -55,7 +55,6 @@ export default async function main() {
         await pipeline(
             function* () {
                 for (const commit in commitsDateCounts) {
-                    console.log('commit :>> ', commit);
                     yield `
                         <div data-date="${commit}" data-count="${commitsDateCounts[commit]}"></div>
                     `;
