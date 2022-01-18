@@ -14,7 +14,7 @@ const root = process.cwd();
 export default async function main() {
     logger.write('\r\n\r\n==== The app has been started ====');
     logger.write('From ' + root);
-    logger.write('argv: '+JSON.stringify(opts, null, 3));
+    logger.write('argv: ' + JSON.stringify(opts, null, 3));
 
     const pathToDistHtml = pathJoin(root, 'dist', 'happy-squares.html');
     const pathToSrcHtml = pathJoin(root, 'potato/static', 'index.html');
