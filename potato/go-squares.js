@@ -28,13 +28,13 @@ export default async function main() {
     } catch (err) {}
 
     const commitsDateCounts = gitGetter.getSq();
-    // logger.write(
-    //     `Successfully collected commits and dates: ${JSON.stringify(
-    //         commitsDateCounts,
-    //         null,
-    //         3
-    //     )}`
-    // );
+    logger.write(
+        `Successfully collected commits and dates: ${JSON.stringify(
+            commitsDateCounts,
+            null,
+            3
+        )}`
+    );
 
     try {
         const indexPage = await readFile(

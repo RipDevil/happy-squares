@@ -30,11 +30,9 @@ export class GitSewer {
 
         var currDate = new Date();
         var tmp = new Date(currDate.getTime());
-        var lowerFirstHalf = new Date(tmp.setMonth(currDate.getMonth() - 6));
-        tmp = new Date(currDate.getTime());
-        var lowerSecondHalf = new Date(tmp.setMonth(currDate.getMonth() + 6));
+        var lowerFirstHalf = new Date(tmp.setMonth(currDate.getMonth() - 12));
 
-        const calendar = getDates(lowerFirstHalf, lowerSecondHalf);
+        const calendar = getDates(lowerFirstHalf, currDate.getTime());
 
         commitsDates.forEach((cd) => {
             calendar[cd] += 1;
