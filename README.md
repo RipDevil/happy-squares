@@ -13,7 +13,7 @@ this is a simple project to show git progress (i.e. <insert your color> squares)
 The project is in deep alpha so
 - clone
 - npm link
-- use `happysquares` in any git repo
+- use `hsq` in any git repo
 
 `--l` makes it take local config name
 
