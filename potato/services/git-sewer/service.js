@@ -33,7 +33,7 @@ export class GitSewer {
         tmp = new Date(currDate.getTime());
         var lowerSecondHalf = new Date(tmp.setMonth(currDate.getMonth() + 6));
 
-        const calendar =  getDates(lowerFirstHalf, lowerSecondHalf);
+        const calendar = getDates(lowerFirstHalf, lowerSecondHalf);
 
         commitsDates.forEach((cd) => {
             calendar[cd] += 1;
@@ -43,17 +43,17 @@ export class GitSewer {
     }
 }
 
-function getDates (startDate, endDate) {
-    const dates = {}
-    let currentDate = startDate
+function getDates(startDate, endDate) {
+    const dates = {};
+    let currentDate = startDate;
     const addDays = function (days) {
-      const date = new Date(this.valueOf())
-      date.setDate(date.getDate() + days)
-      return date
-    }
+        const date = new Date(this.valueOf());
+        date.setDate(date.getDate() + days);
+        return date;
+    };
     while (currentDate <= endDate) {
-      dates[currentDate.toDateString()] = 0;
-      currentDate = addDays.call(currentDate, 1)
+        dates[currentDate.toDateString()] = 0;
+        currentDate = addDays.call(currentDate, 1);
     }
-    return dates
-  }
+    return dates;
+}
