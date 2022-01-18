@@ -1,13 +1,14 @@
 import logger from './services/verboseLogger/index.js';
 import opts from './services/opts/index.js';
 
-import { mkdir, readFile } from 'fs/promises';
+import { mkdir } from 'fs/promises';
 import { join as pathJoin } from 'path';
 import { createWriteStream } from 'fs';
 
 import { open } from './utils/open.js';
 import { promisedPipeline as pipeline } from './utils/promised-pipeline.js';
 import gitGetter from './services/git-sewer/index.js';
+import { readFileSimple as readFile } from './utils/read-file-simple.js';
 
 const root = process.cwd();
 
@@ -37,12 +38,7 @@ export default async function main() {
     );
 
     try {
-        const indexPage = await readFile(
-            new URL('./static/index.html', import.meta.url),
-            {
-                encoding: 'utf-8',
-            }
-        );
+        const indexPage = await readFile('./static/index.html', import.meta.url);
 
         const { header, footer } =
             /(?<header>[\s\S]+)\[\[SQUARES\]\](?<footer>[\s\S]+)/m.exec(
