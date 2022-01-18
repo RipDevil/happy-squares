@@ -1,6 +1,10 @@
 import { pipeline } from 'stream';
 
-export const promisedPipeline = (rs, ws) =>
+export const promisedPipeline = (rs, tr, ws) =>
     new Promise((resolve, reject) => {
-        pipeline(rs, ws, resolve).on('error', reject);
+        if (ws) {
+            pipeline(rs, tr, ws, resolve).on('error', reject);
+        } else {
+            pipeline(rs, ws, resolve).on('error', reject);
+        }
     });
