@@ -8,7 +8,7 @@
         "scripts": {
                 "start": "nodemon potato/go-squares.js --d",
                 "start:verbose": "nodemon potato/go-squares.js --d --v",
-                "fix": "prettier --write ."
+                "fix": "prettier --write ./potato"
         },
         "devDependencies": {
                 "nodemon": "^2.0.15",
