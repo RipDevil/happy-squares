@@ -4,11 +4,19 @@ export class GitSewer {
     constructor(gitDateGetter, isLocal) {
         this.exec = gitDateGetter;
         this.isLocal = isLocal;
+        this.gitExist = false;
     }
 
     async init() {
-        this.globalName = await this._getGlobalUserName();
-        this.myCommits = await this._getAllCommits();
+        const version = await this.exec('git --version');
+        this.gitExist = version?.includes('git version');
+        if (this.gitExist) {
+            this.globalName = await this._getGlobalUserName();
+            this.myCommits = await this._getAllCommits();
+            return;
+        }
+
+        throw new Error('There is no GIT in system');
     }
 
     getSq() {

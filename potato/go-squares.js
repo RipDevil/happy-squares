@@ -4,7 +4,7 @@ import gitGetter from './services/git-sewer/index.js';
 
 import { mkdir } from 'fs/promises';
 import { join as pathJoin } from 'path';
-import { createWriteStream } from 'fs';
+import { createWriteStream, existsSync } from 'fs';
 
 import { open } from './utils/open.js';
 import { promisedPipeline as pipeline } from './utils/promised-pipeline.js';
@@ -21,24 +21,24 @@ export default async function main() {
     const pathToDistHtml = pathJoin(root, 'dist', 'happy-squares.html');
     const pathToDistDir = pathJoin(root, 'dist');
 
-    await gitGetter.init();
-
     try {
-        logger.write(`Making dir "${pathToDistDir}"`);
-        await mkdir(pathToDistDir);
-        logger.write(`Make dir success "${pathToDistDir}"`);
-    } catch (err) {}
+        await gitGetter.init();
 
-    const commitsDateCounts = gitGetter.getSq();
-    logger.write(
-        `Successfully collected commits and dates: ${JSON.stringify(
-            commitsDateCounts,
-            null,
-            3
-        )}`
-    );
+        if (!existsSync(pathToDistDir)) {
+            logger.write(`Making dir "${pathToDistDir}"`);
+            await mkdir(pathToDistDir);
+            logger.write(`Make dir success "${pathToDistDir}"`);
+        }
 
-    try {
+        const commitsDateCounts = gitGetter.getSq();
+        logger.write(
+            `Successfully collected commits and dates: ${JSON.stringify(
+                commitsDateCounts,
+                null,
+                3
+            )}`
+        );
+
         const indexPage = await readFile(
             './static/index.html',
             import.meta.url
@@ -65,7 +65,7 @@ export default async function main() {
 
         open(pathToDistHtml);
     } catch (err) {
-        console.log('err :>> ', err);
+        console.error(err);
     }
 }
 
