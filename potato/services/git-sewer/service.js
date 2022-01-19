@@ -24,11 +24,20 @@ export class GitSewer {
     }
 
     async _getGlobalUserName() {
-        return (
-            await this.exec(
-                `git config --${this.isLocal ? 'local' : 'global'} user.name`
-            )
-        ).trim();
+        let name = '';
+        try {
+            name = await this.exec('git config --local user.name');
+        } catch (err) {
+            if (!this.isLocal) {
+                name = await this.exec('git config --global user.name');
+            }
+        }
+
+        if (name === '') {
+            throw new Error('Git user.name is empty');
+        }
+
+        return name.trim();
     }
 
     async _getAllCommits() {
