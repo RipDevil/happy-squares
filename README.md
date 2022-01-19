@@ -15,8 +15,6 @@ The project is in deep alpha so
 - npm link
 - use `hsq` in any git repo
 
-`--l` makes it take local config name
-
 ### develop:
 
 `in progress`
