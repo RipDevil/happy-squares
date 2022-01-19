@@ -1,74 +1,107 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <title>Happy squares for [[USER]]</title>
 
-        <style>
-            body {
-                user-select: none;
-                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+<head>
+    <meta charset="utf-8" />
+    <title>Happy squares for [[USER]]</title>
 
-                height: 100vh;
+    <style>
+        body {
+            user-select: none;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
+            height: 100vh;
 
-                --color-scale-0: #d3d3d336;
-            }
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
 
-            .squares {
-                width: 100%;
-                height: 15%;
-                padding: 0.5rem;
-                display: flex;
-                flex-wrap: wrap;
-                flex-direction: column;
-                align-content: center;
-                justify-content: flex-start;
-                gap: 5px;
-            }
+            --color-scale-0: #d3d3d336;
+        }
 
-            .squares > * {
-                display: inline-block;
-                background-color: var(--color-scale-0);
-                width: 0.5rem;
-                height: 0.5rem;
-                cursor: pointer;
-                padding: 0.1rem;
+        .squares {
+            width: 100%;
+            height: 15%;
+            padding: 0.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: column;
+            align-content: center;
+            justify-content: flex-start;
+            gap: 5px;
+        }
 
-                border-radius: 20%;
-            }
+        .squares>* {
+            display: inline-block;
+            background-color: var(--color-scale-0);
+            width: 0.5rem;
+            height: 0.5rem;
+            cursor: pointer;
+            padding: 0.1rem;
 
-            h1 {
-                width: 100%;
-                text-align: start;
-                padding: 0;
-                margin: 0;
-                font-size: smaller;
-                font-weight: normal;
-                opacity: 0.5;
-            }
-        </style>
-    </head>
+            border-radius: 20%;
+        }
 
-    <body>
-        <div class="squares">[[SQUARES]]</div>
+        h1 {
+            width: 100%;
+            text-align: start;
+            padding: 0;
+            margin: 0;
+            font-size: smaller;
+            font-weight: normal;
+            opacity: 0.5;
+        }
 
-        <script type="module" defer>
-            document.querySelectorAll('.squares > *').forEach((s) => {
-                if (s.dataset?.count > 0) {
-                    s.style.backgroundColor = `hsl([[COLOR]], 100%, ${
-                        100 - s.dataset.count * 5
+        .hover {
+            display: none;
+            position: absolute;
+
+            padding: 1rem;
+
+            background-color: whitesmoke;
+
+            top: 35%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="squares">[[SQUARES]]</div>
+
+    <div class="hover">asd</div>
+
+    <script type="module" defer>
+        const hover = document.querySelector('.hover');
+        let timeout;
+        document.querySelectorAll('.squares > *').forEach((s) => {
+            if (s.dataset?.count > 0) {
+                s.style.backgroundColor = `hsl([[COLOR]], 100%, ${100 - s.dataset.count * 5
                     }%)`;
+            }
+
+            s.addEventListener('click', (e) => {
+                console.log('Day: ', e.target.dataset?.date, ' Commits: ', e.target.dataset?.count);
+            });
+
+            s.addEventListener('mouseover', (e) => {
+                if (timeout) {
+                    timeout = clearTimeout(timeout);
                 }
 
-                s.addEventListener('click', (e) => {
-                    console.log('e :>> ', e);
-                });
+                if (e.target.dataset?.count !== '0') {
+                    hover.style.display = 'block';
+                    hover.innerHTML = 'on ' + e.target.dataset?.date + ' you made ' + e.target.dataset?.count + ' commits!';
+                }
             });
-        </script>
-    </body>
+
+            s.addEventListener('mouseleave', (e) => {
+                timeout = setTimeout(() => {
+                    hover.style.display = 'none';
+                }, 1000);
+            })
+        });
+    </script>
+</body>
+
 </html>
