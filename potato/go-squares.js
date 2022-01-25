@@ -32,11 +32,7 @@ export default async function main() {
 
         const commitsDateCounts = gitGetter.getSq();
         logger.write(
-            `Successfully collected commits and dates: ${JSON.stringify(
-                commitsDateCounts,
-                null,
-                3
-            )}`
+            `Successfully collected commits and dates: ${Object.keys(commitsDateCounts).length}`
         );
 
         const indexPage = await readFile(
