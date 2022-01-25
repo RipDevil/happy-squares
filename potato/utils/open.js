@@ -11,17 +11,15 @@ const osPlatform = platform();
 export const open = async (path) => {
     vlogger.write(`Platform is "${osPlatform}"`);
 
-    try {
-        await access(path);
+    await access(path);
 
-        let command = `google-chrome --no-sandbox ${path}`;
-        if (osPlatform === 'win32') {
-            command = `start microsoft-edge:${path}`;
-        } else if (osPlatform === 'darwin') {
-            command = `open -a "Google Chrome" ${path}`;
-        }
+    let command = `google-chrome --no-sandbox ${path}`;
+    if (osPlatform === 'win32') {
+        command = `start microsoft-edge:${path}`;
+    } else if (osPlatform === 'darwin') {
+        command = `open -a "Google Chrome" ${path}`;
+    }
 
-        vlogger.write(`Open command is "${command}"`);
-        !opts.dev && exec(command);
-    } catch (err) {}
+    vlogger.write(`Open command is "${command}"`);
+    !opts.dev && exec(command);
 };
