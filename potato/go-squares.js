@@ -64,10 +64,10 @@ export default async function main() {
         );
 
         ['js', 'css'].forEach(
-            async (t) =>
+            async (fileType) =>
                 await pipeline(
-                    createReadStream(`./static/${t}/main.${t}`),
-                    createWriteStream(pathJoin(pathToDistDir, t, 'main.' + t))
+                    createReadStream(`./static/${fileType}/main.${fileType}`),
+                    createWriteStream(pathJoin(pathToDistDir, fileType, 'main.' + fileType))
                 )
         );
 
