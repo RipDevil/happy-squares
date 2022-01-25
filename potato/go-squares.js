@@ -58,16 +58,18 @@ export default async function main() {
             writeSquares(commitsDateCounts),
             async function* (stream) {
                 for await (const chunk of stream) yield chunk;
-                yield footer.replace(/\[\[COLOR\]\]/g, 9);
+                yield footer; // TODO: make replace color
             },
             distWriteStream
         );
 
         ['js', 'css'].forEach(
-            async (fileType) =>
+            async (type) =>
                 await pipeline(
-                    createReadStream(`./static/${fileType}/main.${fileType}`),
-                    createWriteStream(pathJoin(pathToDistDir, fileType, 'main.' + fileType))
+                    createReadStream(`./potato/static/${type}/main.${type}`),
+                    createWriteStream(
+                        pathJoin(pathToDistDir, type, 'main.' + type)
+                    )
                 )
         );
 
