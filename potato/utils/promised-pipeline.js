@@ -5,6 +5,6 @@ export const promisedPipeline = (rs, tr, ws) =>
         if (ws) {
             pipeline(rs, tr, ws, resolve).on('error', reject);
         } else {
-            pipeline(rs, ws, resolve).on('error', reject);
+            pipeline(rs, tr, resolve).on('error', reject);
         }
     });
