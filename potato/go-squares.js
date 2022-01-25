@@ -2,9 +2,9 @@ import logger from './services/verboseLogger/index.js';
 import opts from './services/opts/index.js';
 import gitGetter from './services/git-sewer/index.js';
 
-import { mkdir } from 'fs/promises';
+import { mkdir, rm as remove } from 'fs/promises';
 import { join as pathJoin } from 'path';
-import { createWriteStream, existsSync } from 'fs';
+import { createWriteStream, createReadStream } from 'fs';
 
 import { open } from './utils/open.js';
 import { promisedPipeline as pipeline } from './utils/promised-pipeline.js';
@@ -24,15 +24,19 @@ export default async function main() {
     try {
         await gitGetter.init();
 
-        if (!existsSync(pathToDistDir)) {
-            logger.write(`Making dir "${pathToDistDir}"`);
-            await mkdir(pathToDistDir);
-            logger.write(`Make dir success "${pathToDistDir}"`);
-        }
+        await remove(pathToDistDir, { force: true, recursive: true });
+
+        logger.write(`Making dir "${pathToDistDir}"`);
+        await mkdir(pathToDistDir);
+        await mkdir(pathJoin(pathToDistDir, 'js'));
+        await mkdir(pathJoin(pathToDistDir, 'css'));
+        logger.write(`Make dir success "${pathToDistDir}"`);
 
         const commitsDateCounts = gitGetter.getSq();
         logger.write(
-            `Successfully collected commits and dates: ${Object.keys(commitsDateCounts).length}`
+            `Successfully collected commits and dates: ${
+                Object.keys(commitsDateCounts).length
+            }`
         );
 
         const indexPage = await readFile(
@@ -57,6 +61,14 @@ export default async function main() {
                 yield footer.replace(/\[\[COLOR\]\]/g, 9);
             },
             distWriteStream
+        );
+
+        ['js', 'css'].forEach(
+            async (t) =>
+                await pipeline(
+                    createReadStream(`./static/${t}/main.${t}`),
+                    createWriteStream(pathJoin(pathToDistDir, t, 'main.' + t))
+                )
         );
 
         open(pathToDistHtml);
