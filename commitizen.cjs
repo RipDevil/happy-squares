@@ -1,54 +1,42 @@
-"use strict";
+'use strict';
 
 module.exports = {
-  types: [
-    {
-      value: "build",
-      name: "build:     Сборка проекта или изменения внешних зависимостей"
+    types: [
+        { value: ':beetle:', name: 'bugfix' },
+        {
+            value: ':package:',
+            name: 'package.json changes',
+        },
+        { value: ':books:', name: 'documentation' },
+        { value: ':zap:', name: 'feature' },
+        {
+            value: ':lipstick:',
+            name: 'refactor or codestyle changes',
+        },
+        { value: 'other', name: 'other changes' },
+        { value: ':rotating_light:', name: 'somthing about tests' },
+    ],
+
+    scopes: [],
+
+    messages: {
+        type: 'What changes?',
+        scope: '\nChoose:',
+        subject: 'Description:\n',
+        body: 'More info:\n',
+        footer: 'PS:\n',
+        confirmCommit: 'Is it OK?',
     },
-    { value: "docs", name: "docs:      Обновление документации" },
-    { value: "feat", name: "feat:      Добавление нового функционала" },
-    { value: "fix", name: "fix:       Исправление ошибок" },
-    {
-      value: "refactor",
-      name:
-        "refactor:  Правки кода без исправления ошибок или добавления новых функций"
-    },
-    { value: "revert", name: "revert:    Откат на предыдущие коммиты" },
-    {
-      value: "style",
-      name:
-        "style:     Правки по кодстайлу (табы, отступы, точки, запятые и т.д.)"
-    },
-    { value: "test", name: "test:      Добавление тестов" }
-  ],
 
-  scopes: [
-    { name: "static" },
-    { name: "main" },
-  ],
+    // Разрешим собственную ОБЛАСТЬ
+    allowCustomScopes: false,
 
-  messages: {
-    type: "Какие изменения вы вносите?",
-    scope: "\nВыберите ОБЛАСТЬ, которую вы изменили (опционально):",
-    customScope: "Укажите свою ОБЛАСТЬ:",
-    subject: "Напишите КОРОТКОЕ описание:\n",
-    body:
-      'Напишите ПОДРОБНОЕ описание (опционально). Используйте "|" для новой строки:\n',
-    footer:
-      "Место для доп информации:\n",
-    confirmCommit: "Вас устраивает получившийся коммит?"
-  },
+    // Запрет на Breaking Changes
+    allowBreakingChanges: false,
 
-  // Разрешим собственную ОБЛАСТЬ
-  allowCustomScopes: true,
+    // Префикс для нижнего колонтитула
+    footerPrefix: 'INFO:',
 
-  // Запрет на Breaking Changes
-  allowBreakingChanges: false,
-
-  // Префикс для нижнего колонтитула
-  footerPrefix: "INFO:",
-
-  // limit subject length
-  subjectLimit: 72
+    // limit subject length
+    subjectLimit: 72,
 };
