@@ -2,41 +2,32 @@
 
 module.exports = {
     types: [
-        { value: ':beetle:', name: 'bugfix' },
+        { value: ':beetle', name: 'Bug fix' },
         {
-            value: ':package:',
-            name: 'package.json changes',
+            value: ':package',
+            name: 'Building, packages, config changes',
         },
-        { value: ':books:', name: 'documentation' },
-        { value: ':zap:', name: 'feature' },
+        { value: ':books', name: 'Documentation changes' },
+        { value: ':zap:', name: 'Adding feature' },
         {
-            value: ':lipstick:',
-            name: 'refactor or codestyle changes',
+            value: ':lipstick',
+            name: 'Refactor or codestyle changes',
         },
-        { value: 'other', name: 'other changes' },
-        { value: ':rotating_light:', name: 'somthing about tests' },
+        { value: 'other', name: 'Other changes' },
+        { value: ':rotating_light', name: 'Tests related' },
     ],
 
     scopes: [],
 
     messages: {
-        type: 'What changes?',
-        scope: '\nChoose:',
-        subject: 'Description:\n',
-        body: 'More info:\n',
-        footer: 'PS:\n',
-        confirmCommit: 'Is it OK?',
+        type: 'Type of changes',
+        scope: 'Scope (optional) -- ',
+        subject: 'Description -- ',
+        confirmCommit: 'Is this commit message suitable?',
     },
 
-    // Разрешим собственную ОБЛАСТЬ
+    skipQuestions: ['body', 'footer'],
     allowCustomScopes: false,
-
-    // Запрет на Breaking Changes
     allowBreakingChanges: false,
-
-    // Префикс для нижнего колонтитула
-    footerPrefix: 'INFO:',
-
-    // limit subject length
     subjectLimit: 72,
 };
