@@ -14,7 +14,16 @@
     "fix": "prettier --write ./potato"
   },
   "devDependencies": {
+    "cz-customizable": "^6.3.0",
     "nodemon": "^2.0.15",
     "prettier": "^2.5.1"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-customizable"
+    },
+    "cz-customizable": {
+      "config": "commitizen.cjs"
+    }
   }
 }
