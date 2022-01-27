@@ -66,7 +66,12 @@ export default async function main() {
         ['js', 'css'].forEach(
             async (type) =>
                 await pipeline(
-                    createReadStream(`./potato/static/${type}/main.${type}`),
+                    createReadStream(
+                        new URL(
+                            `./static/${type}/main.${type}`,
+                            import.meta.url
+                        )
+                    ),
                     createWriteStream(
                         pathJoin(pathToDistDir, type, 'main.' + type)
                     )
